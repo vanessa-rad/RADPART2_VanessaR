@@ -1,0 +1,37 @@
+public class ProductInterestsTriggerHandler {
+    
+    public static void handleAfterInsert (List <Lead> newLeads){
+     //List <Lead> newTaskCreationForLeads = new List <Lead>();
+        
+    // Get the product interests for the leads in this trigger.        
+    	List<Lead> leadProductInterests = [SELECT Id,ProductInterest__c 
+                                           FROM Lead
+        								   WHERE Id IN :Trigger.New]; 
+        
+    //creating a collection to store new tasks in
+      
+    	List <Task> newLeadTask = new List <Task>();
+        
+    /*checking to make sure list has something in it before iterating. looping through the new leads we will need to 
+    create tasks for */
+        if (leadProductInterests.Size()>0){
+     		for (Lead lead : leadProductInterests){
+                if (lead.ProductInterest__c !=null){
+                    Task task = new task();
+                    newLeadTask.add(task); //not sure what I'm doing at this point honestly
+                }
+                
+        	}
+        }
+    
+        
+    /*for each new lead get me the id and product interests for records whose product interests are not null
+     * something I was going to use but didn't
+        for (Lead lead : [SELECT Id, ProductInterest__c FROM Lead
+                     WHERE Id IN :Trigger.New AND
+                     ProductInterest__c != null]){
+            
+        }*/
+        
+    }
+}
